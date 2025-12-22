@@ -1,7 +1,7 @@
 package com.dolarapp.currencyexchange.feature.currency.impl.presentation;
 
 import com.dolarapp.currencyexchange.core.dispatcher.DispatcherProvider;
-import com.dolarapp.currencyexchange.feature.currency.impl.data.repository.CurrencyRepository;
+import com.dolarapp.currencyexchange.feature.currency.api.repository.CurrencyRepository;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.QualifierMetadata;

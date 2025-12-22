@@ -3,9 +3,11 @@ package com.dolarapp.currencyexchange.feature.currency.impl.presentation
 import androidx.lifecycle.viewModelScope
 import com.dolarapp.currencyexchange.core.dispatcher.DispatcherProvider
 import com.dolarapp.currencyexchange.core.mvi.BaseMviViewModel
-import com.dolarapp.currencyexchange.feature.currency.impl.data.repository.CurrencyRepository
+import com.dolarapp.currencyexchange.feature.currency.api.repository.CurrencyRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 /**
@@ -21,116 +23,86 @@ class CurrencyExchangeViewModel @Inject constructor(
     dispatcherProvider = dispatcherProvider
 ) {
 
-    init {
-        // Load initial data
-        processIntent(CurrencyExchangeIntent.LoadRates)
-    }
-
     override fun handleIntent(intent: CurrencyExchangeIntent) {
         when (intent) {
-            is CurrencyExchangeIntent.LoadRates -> loadRates()
-            is CurrencyExchangeIntent.ConvertCurrency -> convertCurrency()
-            is CurrencyExchangeIntent.SwapCurrencies -> swapCurrencies()
-            is CurrencyExchangeIntent.SelectFromCurrency -> selectFromCurrency(intent.currency)
-            is CurrencyExchangeIntent.SelectToCurrency -> selectToCurrency(intent.currency)
-            is CurrencyExchangeIntent.UpdateAmount -> updateAmount(intent.amount)
+            is CurrencyExchangeIntent.LoadCurrencies -> loadCurrencies(intent.useFake)
+            is CurrencyExchangeIntent.SelectCurrency -> selectCurrency(intent.currency)
+            is CurrencyExchangeIntent.LoadTickers -> loadTickers()
         }
     }
 
-    private fun loadRates() {
-        viewModelScope.launch(dispatcherProvider.io) {
-            updateState { copy(isLoading = true, error = null) }
-            
-            try {
-                val currencies = currencyRepository.getAvailableCurrencies()
-                val rates = currencyRepository.getExchangeRates(currentState.fromCurrency)
-                
+    private fun loadCurrencies(useFake: Boolean) {
+        updateState { copy(isLoading = true, error = null) }
+
+        val flow = if (useFake) {
+            currencyRepository.getAvailableCurrenciesFake()
+        } else {
+            currencyRepository.getAvailableCurrencies()
+        }
+
+        flow
+            .onEach { currencies ->
                 updateState {
                     copy(
                         isLoading = false,
-                        availableCurrencies = currencies,
-                        exchangeRates = rates
-                    )
-                }
-                
-                // Auto-convert if amount is already entered
-                if (currentState.amount.isNotEmpty()) {
-                    convertCurrency()
-                }
-            } catch (e: Exception) {
-                updateState { copy(isLoading = false, error = e.message) }
-                emitEffect(CurrencyExchangeEffect.ShowError("Failed to load exchange rates: ${e.message}"))
-            }
-        }
-    }
-
-    private fun convertCurrency() {
-        viewModelScope.launch(dispatcherProvider.io) {
-            val amountText = currentState.amount
-            if (amountText.isEmpty() || amountText.toDoubleOrNull() == null) {
-                updateState { copy(convertedAmount = "") }
-                return@launch
-            }
-
-            try {
-                val amount = amountText.toDouble()
-                val converted = currencyRepository.convertCurrency(
-                    amount = amount,
-                    fromCurrency = currentState.fromCurrency,
-                    toCurrency = currentState.toCurrency
-                )
-                
-                updateState {
-                    copy(
-                        convertedAmount = String.format("%.2f", converted),
+                        currencies = currencies,
                         error = null
                     )
                 }
-            } catch (e: Exception) {
-                updateState { copy(error = e.message) }
-                emitEffect(CurrencyExchangeEffect.ShowError("Conversion failed: ${e.message}"))
             }
-        }
+            .catch { e ->
+                updateState {
+                    copy(
+                        isLoading = false,
+                        error = "Failed to load currencies: ${e.message}"
+                    )
+                }
+                emitEffect(CurrencyExchangeEffect.ShowError("Failed to load currencies: ${e.message}"))
+            }
+            .launchIn(viewModelScope)
     }
 
-    private fun swapCurrencies() {
+    private fun selectCurrency(currency: String) {
+        val currentSelected = currentState.selectedCurrencies.toMutableList()
+        if (currency in currentSelected) {
+            currentSelected.remove(currency)
+        } else {
+            currentSelected.add(currency)
+        }
         updateState {
-            copy(
-                fromCurrency = toCurrency,
-                toCurrency = fromCurrency,
-                convertedAmount = ""
-            )
+            copy(selectedCurrencies = currentSelected)
         }
-        // Reload rates for new base currency and convert
-        processIntent(CurrencyExchangeIntent.LoadRates)
     }
 
-    private fun selectFromCurrency(currency: String) {
-        updateState {
-            copy(
-                fromCurrency = currency,
-                convertedAmount = ""
-            )
+    private fun loadTickers() {
+        val selected = currentState.selectedCurrencies
+        if (selected.isEmpty()) {
+            updateState { copy(tickers = emptyList()) }
+            return
         }
-        // Reload rates for new base currency and convert
-        processIntent(CurrencyExchangeIntent.LoadRates)
-    }
 
-    private fun selectToCurrency(currency: String) {
-        updateState {
-            copy(
-                toCurrency = currency,
-                convertedAmount = ""
-            )
-        }
-        // Convert with new target currency
-        processIntent(CurrencyExchangeIntent.ConvertCurrency)
-    }
+        updateState { copy(isLoading = true, error = null) }
 
-    private fun updateAmount(amount: String) {
-        updateState { copy(amount = amount) }
-        // Auto-convert when amount changes
-        processIntent(CurrencyExchangeIntent.ConvertCurrency)
+        currencyRepository.getTickers(selected)
+            .onEach { tickers ->
+                updateState {
+                    copy(
+                        isLoading = false,
+                        tickers = tickers,
+                        error = null
+                    )
+                }
+            }
+            .catch { e ->
+                updateState {
+                    copy(
+                        isLoading = false,
+                        error = "Failed to load tickers: ${e.message}"
+                    )
+                }
+                emitEffect(CurrencyExchangeEffect.ShowError("Failed to load tickers: ${e.message}"))
+            }
+            .launchIn(viewModelScope)
     }
 }
 

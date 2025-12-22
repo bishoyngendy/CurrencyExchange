@@ -26,7 +26,7 @@ interface AppConfig {
  */
 class DefaultAppConfig : AppConfig {
     override val baseUrl: String
-        get() = "https://api.exchangerate-api.com/v4/" // Placeholder URL
+        get() = "https://api.dolarapp.dev/v1/"
     
     override val apiKey: String?
         get() = null
@@ -40,7 +40,7 @@ class DefaultAppConfig : AppConfig {
  */
 class ProductionAppConfig : AppConfig {
     override val baseUrl: String
-        get() = "https://api.exchangerate-api.com/v4/"
+        get() = "https://api.dolarapp.dev/v1/"
     
     override val apiKey: String?
         get() = null

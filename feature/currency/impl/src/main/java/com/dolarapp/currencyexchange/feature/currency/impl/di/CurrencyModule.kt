@@ -1,7 +1,9 @@
 package com.dolarapp.currencyexchange.feature.currency.impl.di
 
+import com.dolarapp.currencyexchange.feature.currency.api.repository.CurrencyRepository
 import com.dolarapp.currencyexchange.feature.currency.impl.data.api.CurrencyApi
-import com.dolarapp.currencyexchange.feature.currency.impl.data.repository.CurrencyRepository
+import com.dolarapp.currencyexchange.feature.currency.impl.data.repository.CurrencyRepositoryImpl
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,21 +16,20 @@ import javax.inject.Singleton
  */
 @Module
 @InstallIn(SingletonComponent::class)
-object CurrencyModule {
+abstract class CurrencyModule {
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideCurrencyApi(retrofit: Retrofit): CurrencyApi {
-        return retrofit.create(CurrencyApi::class.java)
-    }
+    abstract fun bindCurrencyRepository(
+        impl: CurrencyRepositoryImpl
+    ): CurrencyRepository
 
-    @Provides
-    @Singleton
-    fun provideCurrencyRepository(
-        currencyApi: CurrencyApi
-    ): CurrencyRepository {
-        return CurrencyRepository(currencyApi)
+    companion object {
+        @Provides
+        @Singleton
+        fun provideCurrencyApi(retrofit: Retrofit): CurrencyApi {
+            return retrofit.create(CurrencyApi::class.java)
+        }
     }
-
 }
 

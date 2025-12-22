@@ -1,6 +1,8 @@
 package com.dolarapp.currencyexchange.core.network
 
 import com.dolarapp.currencyexchange.core.config.AppConfig
+import com.dolarapp.currencyexchange.core.network.adapter.BigDecimalAdapter
+import com.dolarapp.currencyexchange.core.network.adapter.InstantAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -25,6 +27,8 @@ object NetworkModule {
     @Singleton
     fun provideMoshi(): Moshi {
         return Moshi.Builder()
+            .add(BigDecimalAdapter())
+            .add(InstantAdapter())
             .addLast(KotlinJsonAdapterFactory())
             .build()
     }
