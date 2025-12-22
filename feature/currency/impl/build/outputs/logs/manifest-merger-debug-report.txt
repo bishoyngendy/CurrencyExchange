@@ -1,0 +1,16 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/feature/currency/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest14604258699753986395.xml:2:13-83
+INJECTED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/feature/currency/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest14604258699753986395.xml:2:13-83
+	package
+		INJECTED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/feature/currency/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest14604258699753986395.xml
+	xmlns:android
+		ADDED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/feature/currency/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest14604258699753986395.xml:2:23-81
+uses-sdk
+INJECTED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/feature/currency/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest14604258699753986395.xml reason: use-sdk injection requested
+INJECTED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/feature/currency/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest14604258699753986395.xml
+INJECTED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/feature/currency/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest14604258699753986395.xml
+	android:targetSdkVersion
+		INJECTED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/feature/currency/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest14604258699753986395.xml
+	android:minSdkVersion
+		INJECTED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/feature/currency/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest14604258699753986395.xml

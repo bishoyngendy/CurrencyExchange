@@ -21,4 +21,15 @@ dependencyResolutionManagement {
 
 rootProject.name = "CurrencyExchange"
 include(":app")
+
+// Core modules
+include(":core:designsystem")
+include(":core:config")
+include(":core:network")
+include(":core:dispatcher")
+include(":core:mvi")
+
+// Feature modules
+include(":feature:currency:api")
+include(":feature:currency:impl")
  

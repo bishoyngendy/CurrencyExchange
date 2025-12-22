@@ -5,43 +5,38 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.dolarapp.currencyexchange.ui.theme.CurrencyExchangeTheme
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.dolarapp.currencyexchange.core.designsystem.theme.CurrencyExchangeTheme
+import com.dolarapp.currencyexchange.feature.currency.api.CURRENCY_EXCHANGE_ROUTE
+import com.dolarapp.currencyexchange.feature.currency.api.currencyExchangeScreen
+import com.dolarapp.currencyexchange.feature.currency.impl.CurrencyExchangeScreenProvider
+import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Main activity for Currency Exchange app
+ * Sets up Navigation Compose and applies design system theme
+ */
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             CurrencyExchangeTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                val navController = rememberNavController()
+                
+                NavHost(
+                    navController = navController,
+                    startDestination = CURRENCY_EXCHANGE_ROUTE,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    currencyExchangeScreen {
+                        CurrencyExchangeScreenProvider()
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CurrencyExchangeTheme {
-        Greeting("Android")
     }
 }

@@ -1,0 +1,16 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/core/dispatcher/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest10916106890387004147.xml:2:13-83
+INJECTED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/core/dispatcher/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest10916106890387004147.xml:2:13-83
+	package
+		INJECTED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/core/dispatcher/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest10916106890387004147.xml
+	xmlns:android
+		ADDED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/core/dispatcher/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest10916106890387004147.xml:2:23-81
+uses-sdk
+INJECTED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/core/dispatcher/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest10916106890387004147.xml reason: use-sdk injection requested
+INJECTED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/core/dispatcher/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest10916106890387004147.xml
+INJECTED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/core/dispatcher/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest10916106890387004147.xml
+	android:targetSdkVersion
+		INJECTED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/core/dispatcher/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest10916106890387004147.xml
+	android:minSdkVersion
+		INJECTED from /Users/Bishoy/AndroidStudioProjects/CurrencyExchange/core/dispatcher/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest10916106890387004147.xml

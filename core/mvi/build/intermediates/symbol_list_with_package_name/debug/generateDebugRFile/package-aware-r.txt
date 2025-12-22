@@ -1,0 +1,1 @@
+com.dolarapp.currencyexchange.core.mvi
