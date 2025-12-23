@@ -28,11 +28,24 @@ android {
     buildFeatures {
         compose = true
     }
+    
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/LICENSE.md"
+            excludes += "/META-INF/LICENSE.txt"
+            excludes += "/META-INF/NOTICE.md"
+            excludes += "/META-INF/NOTICE.txt"
+        }
+    }
 }
 
 dependencies {
     // Feature API
     implementation(project(":feature:currency:api"))
+    
+    // Feature Domain (includes data transitively)
+    implementation(project(":feature:currency:domain"))
     
     // Core modules
     implementation(project(":core:designsystem"))

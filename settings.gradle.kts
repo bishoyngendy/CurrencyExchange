@@ -31,5 +31,7 @@ include(":core:mvi")
 
 // Feature modules
 include(":feature:currency:api")
+include(":feature:currency:data")
+include(":feature:currency:domain")
 include(":feature:currency:impl")
  

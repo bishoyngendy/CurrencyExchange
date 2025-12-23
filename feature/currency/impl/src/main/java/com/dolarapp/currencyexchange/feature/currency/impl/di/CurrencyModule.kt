@@ -1,8 +1,8 @@
 package com.dolarapp.currencyexchange.feature.currency.impl.di
 
 import com.dolarapp.currencyexchange.feature.currency.api.repository.CurrencyRepository
-import com.dolarapp.currencyexchange.feature.currency.impl.data.api.CurrencyApi
-import com.dolarapp.currencyexchange.feature.currency.impl.data.repository.CurrencyRepositoryImpl
+import com.dolarapp.currencyexchange.feature.currency.data.api.CurrencyApi
+import com.dolarapp.currencyexchange.feature.currency.domain.repository.CurrencyRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
