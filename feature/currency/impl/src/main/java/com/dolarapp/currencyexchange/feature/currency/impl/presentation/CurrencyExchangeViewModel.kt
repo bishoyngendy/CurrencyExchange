@@ -14,6 +14,7 @@ import java.math.RoundingMode
 import java.time.Duration
 import java.time.Instant
 import javax.inject.Inject
+import androidx.annotation.VisibleForTesting
 
 /**
  * ViewModel for Currency Exchange screen
@@ -162,16 +163,11 @@ class CurrencyExchangeViewModel @Inject constructor(
         // Determine the new base and quote currencies
         val newBaseCurrency = currency
         val newQuoteCurrency = if (currency == "USDc") {
-            state.calculator.quoteCurrency
+            // If base becomes USDc, quote should be the old base currency
+            state.calculator.baseCurrency
         } else {
+            // If base becomes non-USDc, quote should be USDc
             "USDc"
-        }
-        
-        // Get ticker key (non-USDc currency)
-        val tickerCurrency = if (isConvertingFromUSDc) {
-            newQuoteCurrency
-        } else {
-            newBaseCurrency
         }
         
         // Compute new rate
@@ -214,25 +210,27 @@ class CurrencyExchangeViewModel @Inject constructor(
         }
         
         // Determine the new base and quote currencies
+        val newQuoteCurrency = currency
         val newBaseCurrency = if (currency == "USDc") {
-            state.calculator.baseCurrency
+            // If quote becomes USDc, base should be the old quote currency
+            state.calculator.quoteCurrency
         } else {
+            // If quote becomes non-USDc, base should be USDc
             "USDc"
         }
-        val newQuoteCurrency = currency
-        
+
         // Update isConvertingFromUSDc based on new setup
         val isConvertingFromUSDc = newBaseCurrency == "USDc"
         
         // Get ticker key (non-USDc currency)
         val tickerCurrency = if (isConvertingFromUSDc) {
-            newQuoteCurrency
+            currency
         } else {
             newBaseCurrency
         }
         
         // Compute new rate
-        val newRate = computeRate(newBaseCurrency, newQuoteCurrency, isConvertingFromUSDc, state.tickers)
+        val newRate = computeRate(newBaseCurrency, currency, isConvertingFromUSDc, state.tickers)
         
         // Recalculate amounts: keep USDC amount, recalculate the other currency
         val (newBaseAmount, newQuoteAmount) = if (isConvertingFromUSDc) {
@@ -248,7 +246,7 @@ class CurrencyExchangeViewModel @Inject constructor(
         return state.copy(
             calculator = state.calculator.copy(
                 baseCurrency = newBaseCurrency,
-                quoteCurrency = newQuoteCurrency,
+                quoteCurrency = currency,
                 baseAmount = newBaseAmount,
                 quoteAmount = newQuoteAmount,
                 isConvertingFromUSDc = isConvertingFromUSDc,
@@ -381,6 +379,7 @@ class CurrencyExchangeViewModel @Inject constructor(
     
     /**
      * Calculate quote amount from base amount and rate (without updating state)
+     * No rounding during calculation - only round at final result
      */
     private fun calculateQuoteAmount(baseAmount: String, rate: BigDecimal?): String {
         if (rate == null || baseAmount.isEmpty()) {
@@ -389,7 +388,9 @@ class CurrencyExchangeViewModel @Inject constructor(
         
         return try {
             val baseDecimal = BigDecimal(baseAmount)
+            // Multiply without rounding - keep full precision
             val quoteDecimal = baseDecimal.multiply(rate)
+            // Round only at the final result
             quoteDecimal.setScale(2, RoundingMode.HALF_UP).toPlainString()
         } catch (e: Exception) {
             ""
@@ -398,6 +399,7 @@ class CurrencyExchangeViewModel @Inject constructor(
     
     /**
      * Calculate base amount from quote amount and rate (without updating state)
+     * No rounding during calculation - only round at final result
      */
     private fun calculateBaseAmount(quoteAmount: String, rate: BigDecimal?): String {
         if (rate == null || quoteAmount.isEmpty()) {
@@ -406,7 +408,10 @@ class CurrencyExchangeViewModel @Inject constructor(
         
         return try {
             val quoteDecimal = BigDecimal(quoteAmount)
-            val baseDecimal = quoteDecimal.divide(rate, 10, RoundingMode.HALF_UP)
+            // Divide with maximum precision (34 digits) to preserve precision during calculation
+            // The rounding mode here is only for the division operation, not the final result
+            val baseDecimal = quoteDecimal.divide(rate, 34, RoundingMode.HALF_UP)
+            // Round only at the final result
             baseDecimal.setScale(2, RoundingMode.HALF_UP).toPlainString()
         } catch (e: Exception) {
             ""
@@ -516,5 +521,14 @@ class CurrencyExchangeViewModel @Inject constructor(
                 }
             }
             .launchIn(viewModelScope)
+    }
+    
+    /**
+     * Test helper to set initial state
+     * Only used for testing purposes
+     */
+    @VisibleForTesting
+    internal fun setTestState(state: CurrencyExchangeState) {
+        updateState { state }
     }
 }

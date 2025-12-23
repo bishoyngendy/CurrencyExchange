@@ -71,5 +71,12 @@ dependencies {
     
     // Tooling
     debugImplementation(libs.androidx.compose.ui.tooling)
+    
+    // Testing
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.core)
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
+    testImplementation("app.cash.turbine:turbine:1.1.0")
+    testImplementation("io.mockk:mockk:1.13.10")
 }
 

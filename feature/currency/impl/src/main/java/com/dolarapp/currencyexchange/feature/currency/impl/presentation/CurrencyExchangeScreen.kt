@@ -30,10 +30,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dolarapp.currencyexchange.core.designsystem.components.CurrencyBottomSheet
 import com.dolarapp.currencyexchange.core.designsystem.components.CurrencyCard
 import com.dolarapp.currencyexchange.core.designsystem.components.CurrencyListItem
-import com.dolarapp.currencyexchange.core.designsystem.components.ExchangeRateText
-import com.dolarapp.currencyexchange.core.designsystem.components.ExchangeTitle
 import com.dolarapp.currencyexchange.core.designsystem.components.LoadingIndicator
 import com.dolarapp.currencyexchange.core.designsystem.components.SwapCurrencyButton
+import com.dolarapp.currencyexchange.feature.currency.impl.presentation.components.ExchangeRateText
+import com.dolarapp.currencyexchange.feature.currency.impl.presentation.components.ExchangeTitle
 import com.dolarapp.currencyexchange.core.designsystem.theme.CurrencyCardBackground
 import com.dolarapp.currencyexchange.core.designsystem.theme.ScreenBackground
 import com.dolarapp.currencyexchange.core.designsystem.theme.Spacing

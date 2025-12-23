@@ -67,33 +67,33 @@ fun CurrencyListItem(
         // Radio button (green circle with checkmark when selected) - add padding to prevent cropping
         Box(
             modifier = Modifier
-                .padding(start = Spacing.sm)
+                .padding(horizontal = Spacing.sm, vertical = Spacing.xs)
                 .size(24.dp),
             contentAlignment = Alignment.Center
         ) {
-        Box(
-            modifier = Modifier
-                .size(24.dp)
-                .clip(CircleShape)
-                .background(
-                    if (isSelected) ExchangeRateGreen else Color.Transparent
-                )
-                .then(
-                    if (!isSelected) {
-                        Modifier.border(1.dp, Color.Gray, CircleShape)
-                    } else {
-                        Modifier
-                    }
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-            if (isSelected) {
-                Text(
-                    text = "✓",
-                    color = Color.White,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
-                )
+            Box(
+                modifier = Modifier
+                    .size(24.dp)
+                    .clip(CircleShape)
+                    .background(
+                        if (isSelected) ExchangeRateGreen else Color.Transparent
+                    )
+                    .then(
+                        if (!isSelected) {
+                            Modifier.border(1.dp, Color.Gray, CircleShape)
+                        } else {
+                            Modifier
+                        }
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                if (isSelected) {
+                    Text(
+                        text = "✓",
+                        color = Color.White,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
         }
