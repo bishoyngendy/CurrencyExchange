@@ -63,3 +63,13 @@ val DarkOnSurface = Color(0xFFE6E1E5)
 val DarkSurfaceVariant = Color(0xFF49454F)
 val DarkOnSurfaceVariant = Color(0xFFCAC4D0)
 
+// Accent colors for currency exchange
+val ExchangeRateGreen = Color(0xFF4CAF50) // Green for exchange rate and switch button
+val CurrencyCardBackground = Color(0xFFFFFFFF) // White background for currency cards
+val KeypadBackground = Color(0xFFF5F5F5) // Light gray for keypad background
+val ScreenBackground = Color(0xFFF8F8F8) // Screen background color
+
+// Text colors
+val TitleTextColor = Color(0xFF2C2C2E) // Title text color
+val ExchangeRateTextColor = Color(0xFF22D081) // Exchange rate subtitle color
+

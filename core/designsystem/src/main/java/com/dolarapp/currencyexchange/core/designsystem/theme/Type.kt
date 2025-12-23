@@ -118,3 +118,72 @@ val Typography = Typography(
     )
 )
 
+/**
+ * Custom typography styles for Currency Exchange app
+ * Note: Messina Sans Narrow font family should be added as a custom font resource
+ * For now using FontFamily.Default (system font)
+ */
+
+/**
+ * Title style for Exchange calculator
+ * Font: Messina Sans Narrow (using Default for now)
+ * Weight: 700 (Bold)
+ * Size: 30px
+ * Line height: 33px
+ * Letter spacing: -2%
+ */
+val TitleTextStyle = TextStyle(
+    fontFamily = FontFamily.Default, // TODO: Replace with Messina Sans Narrow when font is added
+    fontWeight = FontWeight.Bold, // 700
+    fontSize = 30.sp,
+    lineHeight = 33.sp,
+    letterSpacing = (-0.6).sp // -2% of 30px = -0.6sp
+)
+
+/**
+ * Exchange rate subtitle style
+ * Weight: 600 (SemiBold)
+ * Size: 16px
+ * Line height: 20px
+ * Letter spacing: 2%
+ */
+val ExchangeRateTextStyle = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontWeight = FontWeight.SemiBold, // 600
+    fontSize = 16.sp,
+    lineHeight = 20.sp,
+    letterSpacing = 0.32.sp // 2% of 16px = 0.32sp
+)
+
+/**
+ * Currency amount text style for input fields and display
+ * Weight: 700 (Bold)
+ * Size: 16px
+ * Line height: 20px
+ * Letter spacing: 2%
+ * Alignment: Right, Middle
+ */
+val CurrencyAmountTextStyle = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontWeight = FontWeight.Bold, // 700
+    fontSize = 16.sp,
+    lineHeight = 20.sp,
+    letterSpacing = 0.32.sp // 2% of 16px = 0.32sp
+)
+
+/**
+ * Currency name text style for currency code display
+ * Weight: 600 (SemiBold)
+ * Size: 16px
+ * Line height: 20px
+ * Letter spacing: 2%
+ * Vertical alignment: Middle
+ */
+val CurrencyNameTextStyle = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontWeight = FontWeight.SemiBold, // 600
+    fontSize = 16.sp,
+    lineHeight = 20.sp,
+    letterSpacing = 0.32.sp // 2% of 16px = 0.32sp
+)
+

@@ -1,1 +1,2 @@
 com.dolarapp.currencyexchange.feature.currency.impl
+drawable ic_arrow_down

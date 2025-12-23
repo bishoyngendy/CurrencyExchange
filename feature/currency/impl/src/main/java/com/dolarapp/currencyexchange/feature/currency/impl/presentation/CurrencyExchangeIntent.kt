@@ -6,8 +6,12 @@ import com.dolarapp.currencyexchange.core.mvi.UiIntent
  * User intents for Currency Exchange screen
  */
 sealed class CurrencyExchangeIntent : UiIntent {
-    data class LoadCurrencies(val useFake: Boolean) : CurrencyExchangeIntent()
-    data class SelectCurrency(val currency: String) : CurrencyExchangeIntent()
-    data object LoadTickers : CurrencyExchangeIntent()
+    data object LoadCurrencies : CurrencyExchangeIntent()
+    // Calculator intents
+    data class SetFromCurrency(val currency: String) : CurrencyExchangeIntent()
+    data class SetToCurrency(val currency: String) : CurrencyExchangeIntent()
+    data class SetFromAmount(val amount: String) : CurrencyExchangeIntent()
+    data class SetToAmount(val amount: String) : CurrencyExchangeIntent()
+    data object SwapCurrencies : CurrencyExchangeIntent()
 }
 

@@ -1,1 +1,2 @@
 com.dolarapp.currencyexchange.core.designsystem
+drawable ic_arrow_down
