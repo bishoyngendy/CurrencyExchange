@@ -53,14 +53,22 @@ fun CurrencyExchangeScreen(
 
 /**
  * Formats exchange rate with commas every 3 digits before decimal point
+ * Removes trailing zeros after the decimal point
  */
 private fun formatExchangeRate(rate: BigDecimal): String {
-    val plainString = rate.toPlainString()
+    // Strip trailing zeros by converting to plain string and removing them
+    val plainString = rate.stripTrailingZeros().toPlainString()
     if (plainString.contains(".")) {
         val parts = plainString.split(".")
         val integerPart = parts[0]
         val decimalPart = parts[1]
-        return "${addCommasToInteger(integerPart)}.$decimalPart"
+        // Remove trailing zeros from decimal part
+        val trimmedDecimal = decimalPart.trimEnd('0')
+        return if (trimmedDecimal.isEmpty()) {
+            addCommasToInteger(integerPart)
+        } else {
+            "${addCommasToInteger(integerPart)}.$trimmedDecimal"
+        }
     } else {
         return addCommasToInteger(plainString)
     }

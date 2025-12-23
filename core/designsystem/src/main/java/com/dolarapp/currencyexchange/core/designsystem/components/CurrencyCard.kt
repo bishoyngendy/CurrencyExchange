@@ -216,22 +216,43 @@ fun CurrencyCard(
 
 /**
  * Formats a number string with commas every 3 digits before the decimal point
- * Example: "1234.56" -> "1,234.56", "1234567" -> "1,234,567"
+ * Removes trailing zeros after the decimal point
+ * Example: "1234.56" -> "1,234.56", "1234.00" -> "1,234", "1234567" -> "1,234,567"
  */
 private fun formatNumberWithCommas(numberString: String): String {
     if (numberString.isEmpty()) return ""
     
     return try {
         val decimal = BigDecimal(numberString)
-        val formatter = DecimalFormat("#,##0.########")
-        formatter.format(decimal)
+        // Strip trailing zeros
+        val stripped = decimal.stripTrailingZeros()
+        val plainString = stripped.toPlainString()
+        
+        if (plainString.contains(".")) {
+            val parts = plainString.split(".")
+            val integerPart = parts[0]
+            val decimalPart = parts[1]
+            // Remove trailing zeros from decimal part
+            val trimmedDecimal = decimalPart.trimEnd('0')
+            if (trimmedDecimal.isEmpty()) {
+                addCommasToInteger(integerPart)
+            } else {
+                "${addCommasToInteger(integerPart)}.$trimmedDecimal"
+            }
+        } else {
+            addCommasToInteger(plainString)
+        }
     } catch (e: Exception) {
         // If parsing fails, try to add commas manually for simple integer cases
         if (numberString.contains(".")) {
             val parts = numberString.split(".")
             val integerPart = parts[0]
-            val decimalPart = parts[1]
-            "${addCommasToInteger(integerPart)}.$decimalPart"
+            val decimalPart = parts[1].trimEnd('0')
+            if (decimalPart.isEmpty()) {
+                addCommasToInteger(integerPart)
+            } else {
+                "${addCommasToInteger(integerPart)}.$decimalPart"
+            }
         } else {
             addCommasToInteger(numberString)
         }
