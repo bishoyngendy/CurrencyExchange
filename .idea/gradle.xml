@@ -19,6 +19,8 @@
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/currency" />
             <option value="$PROJECT_DIR$/feature/currency/api" />
+            <option value="$PROJECT_DIR$/feature/currency/data" />
+            <option value="$PROJECT_DIR$/feature/currency/domain" />
             <option value="$PROJECT_DIR$/feature/currency/impl" />
           </set>
         </option>

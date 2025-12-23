@@ -44,6 +44,9 @@ dependencies {
     // Feature API
     implementation(project(":feature:currency:api"))
     
+    // Feature Data (needed for CurrencyApi in DI module)
+    implementation(project(":feature:currency:data"))
+    
     // Feature Domain (includes data transitively)
     implementation(project(":feature:currency:domain"))
     

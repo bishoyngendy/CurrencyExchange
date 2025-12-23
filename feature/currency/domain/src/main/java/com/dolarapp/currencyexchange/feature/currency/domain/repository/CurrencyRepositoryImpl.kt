@@ -7,7 +7,6 @@ import com.dolarapp.currencyexchange.feature.currency.domain.mapper.CurrencyTick
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import retrofit2.HttpException
 import javax.inject.Inject
 
 /**
@@ -26,9 +25,6 @@ class CurrencyRepositoryImpl @Inject constructor(
         try {
             val currencies = currencyApi.getAvailableCurrencies()
             emit(currencies)
-        } catch (e: HttpException) {
-            // API endpoint doesn't exist yet (404) or other HTTP error
-            emit(FALLBACK_CURRENCIES)
         } catch (e: Exception) {
             // Any other error (network, parsing, etc.)
             emit(FALLBACK_CURRENCIES)
